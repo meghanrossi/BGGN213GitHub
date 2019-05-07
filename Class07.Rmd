@@ -1,0 +1,38 @@
+---
+title: "BGGN213_4_24_19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# We want to make a function to drop the lowest homework grade and give the student's # average score. 
+# First, individual students 1 and 2
+```{r}
+# Let's make our function, called "grade"
+grade <- function(x, na.rm = TRUE){
+  if (na.rm == TRUE) {
+    x <- x[!is.na(x)]
+  }
+y <- x[x > min(x)]
+return(mean(y))
+}
+
+# Two example students
+st1 <- c(100, 100, 100, 100, 100, 100, 100, 90)
+grade(st1)
+st2 <- c(100, NA, 90, 90, 90, 90, 97, 80)
+grade(st2)
+```
+# Let's try this on a larger data-set
+```{r}
+class <- read.csv("student_homework.csv", header = TRUE, row.names = 1)
+ans <- apply(class, 1, grade)
+```
+
+# Who has the highest grade in the class?
+```{r}
+sort(ans, decreasing = TRUE)
+```
+

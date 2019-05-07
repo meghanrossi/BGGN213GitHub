@@ -1,0 +1,120 @@
+---
+title: "Class09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Open our data
+wisc.df <- read.csv("WisconsinCancer.csv", row.names = 1)
+# How many patients?
+nrow(wisc.df)
+# How many malignant?
+print(table(wisc.df$diagnosis))
+# How many columns have "mean" in them?
+length(grep("mean", colnames(wisc.df)))
+```
+
+```{r}
+# Turn most of the colums into a data frame
+wisc.data <- as.matrix(wisc.df[,2:31])
+# Save the diagnosis column for later
+diagnosis <- wisc.df[,1]
+```
+
+```{r}
+# Do we scale? Check by looking at the means and SDs
+round(colMeans(wisc.data))
+round(apply(wisc.data,2,sd))
+```
+
+```{r}
+wisc.pr <- prcomp(wisc.data, scale = TRUE)
+summary(wisc.pr)
+```
+
+```{r}
+# Plot the data
+# biplot(wisc.pr)
+# Plot PC1 and PC2
+plot(wisc.pr$x[,1:2], col = diagnosis, xlab = "PC1", ylab = "PC2")
+# Plot PC1 and PC3
+plot(wisc.pr$x[,1], wisc.pr$x[,3], col = diagnosis, xlab = "PC1", ylab = "PC3")
+```
+
+```{r}
+# What is the variance captured by each PC?
+pr.var <- (wisc.pr$sdev^2)
+head(pr.var)
+sum(pr.var)
+pve <- pr.var / sum(pr.var)
+# We can make a line plot
+# plot(pve, xlab = "Principal Component", ylab = "Proportion of Variance Explained", ylim = c(0,1), type = "o")
+# Or we can make a bar plot
+barplot(pve, ylab = "Percent of Variance Explained", names.arg = paste0("PC", 1:length(pve)), las = 2, axes = FALSE)
+axis(2, at = pve, labels = round(pve,2)*100)
+```
+
+```{r}
+## ggplot based graph
+#install.packages("factoextra")
+library(factoextra)
+fviz_eig(wisc.pr, addlabels = TRUE)
+```
+
+```{r}
+wisc.pr$rotation["radius_mean",1]
+wisc.pr$rotation["smoothness_se",1]
+sort(abs(wisc.pr$rotation[,1]))
+# View(wisc.pr$rotation)
+
+```
+
+```{r}
+data.scaled <- scale(wisc.data)
+data.dist <- dist(data.scaled)
+hclust1 <- hclust(data.dist, method = 'complete')
+plot(hclust1)
+```
+
+```{r}
+cut_avg <- cutree(hclust1, k = 4)
+# last argument can be h and then that tells it the height
+table(cut_avg, diagnosis)
+```
+
+# Section 5
+# Use PCA to potentially help the hierarchical clustering
+# Start with the PCs that capture 90% of the variance
+```{r}
+wisc.pr.hclust <- hclust( dist( wisc.pr$x[,1:7]), method = "ward.D2" )
+plot(wisc.pr.hclust)
+abline(h=70, col = "red", lty = 2)
+
+```
+
+```{r}
+grps <- cutree(wisc.pr.hclust, k = 2)
+table(grps)
+table(grps, diagnosis)
+```
+```{r}
+plot(wisc.pr$x[,1], wisc.pr$x[,2], col = grps)
+```
+
+```{r}
+url <- "https://tinyurl.com/new-samples-CSV"
+new <- read.csv(url)
+npc <- predict(wisc.pr, newdata=new)
+npc
+```
+
+```{r}
+plot(wisc.pr$x[,1:2], col= diagnosis)
+points(npc[,1], npc[,2], col="blue", pch=16, cex=3)
+text(npc[,1], npc[,2], c(1,2), col="white")
+```
+

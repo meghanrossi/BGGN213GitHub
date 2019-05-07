@@ -1,0 +1,25 @@
+---
+title: "Class07_2"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+source("http://tinyurl.com/rescale-R")
+```
+```{r}
+x <- df1$IDs
+y <- df2$IDs
+x[x %in% y]
+y[y %in% x]
+gene_intersect2(df1, df2)
+```
+```{r}
+if (!requireNamespace("BiocManager"))
+    install.packages("BiocManager")
+BiocManager::install()
+```
+
+browseVignettes(package = "dplyr")

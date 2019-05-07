@@ -1,0 +1,45 @@
+---
+title: "InClass06Homework"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Can you improve this analysis code?
+library(bio3d)
+s1 <- read.pdb("4AKE") # kinase with drug
+s2 <- read.pdb("1AKE") # kinase no drug
+s3 <- read.pdb("1E4Y") # kinase with drug
+s1.chainA <- trim.pdb(s1, chain="A", elety="CA")
+s2.chainA <- trim.pdb(s2, chain="A", elety="CA")
+s3.chainA <- trim.pdb(s3, chain="A", elety="CA")
+s1.b <- s1.chainA$atom$b
+s2.b <- s2.chainA$atom$b
+s3.b <- s3.chainA$atom$b
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor")
+plotb3(s2.b, sse=s2.chainA, typ="l", ylab="Bfactor")
+plotb3(s3.b, sse=s3.chainA, typ="l", ylab="Bfactor")
+```
+
+
+```{r}
+# We are making a function to extract information about the B-factor of a specific protein we query. B-factors can be defined as the fluctuation of atoms around their average positions. B-factors can provide important information about protein dynamics. 
+# We use this function by calling it by using the function name, "Bfactor", and then in the parentheses we include the name of the protein we are interested in.
+Bfactor <- function(x) {
+# The input to this function is the name of the protein on the PDB database. 
+  protein <- read.pdb(x)
+  chain <- trim.pdb(protein, chain="A", elety="CA")
+  bfac <- chain$atom$b
+  plotb3(bfac, sse = chain, typ = "l", ylab = "B-factor")
+# The output of this function is a plot with the residues on the X axis and the B-factor values on the Y axis displayed as a line graph. 
+}
+```
+
+```{r}
+# Let's try our function out with a real kinase.
+Bfactor("1AKE")
+```
+
