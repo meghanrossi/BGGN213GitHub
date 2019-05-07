@@ -1,6 +1,6 @@
 ---
 title: "BGGN213_4_24_19"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}

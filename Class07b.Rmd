@@ -1,6 +1,6 @@
 ---
 title: "Class07_2"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -17,9 +17,9 @@ y[y %in% x]
 gene_intersect2(df1, df2)
 ```
 ```{r}
-if (!requireNamespace("BiocManager"))
-    install.packages("BiocManager")
-BiocManager::install()
+# if (!requireNamespace("BiocManager"))
+#     install.packages("BiocManager")
+# BiocManager::install()
 ```
 
 browseVignettes(package = "dplyr")
