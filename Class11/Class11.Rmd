@@ -1,0 +1,45 @@
+---
+title: "Untitled"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(bio3d)
+```
+
+```{r}
+pdb <- read.pdb("1hsg.pdb")
+pdb
+```
+
+```{r}
+aa321(pdb$seqres)
+```
+
+```{r}
+pdb$atom
+```
+
+```{r}
+inds <- atom.select(pdb, resno = 10)
+```
+
+```{r}
+pdb$atom[inds$atom, ]
+```
+
+```{r}
+atom.select(pdb, resno = 10, value = TRUE)
+```
+
+```{r}
+pdbprot <- atom.select(pdb, 'protein', value = TRUE)
+pdblig <- atom.select(pdb, 'ligand', value = TRUE)
+write.pdb(pdbprot, file = "1hsg_protein.pdb")
+write.pdb(pdblig, file = "1hsg_ligand.pdb")
+```
+
