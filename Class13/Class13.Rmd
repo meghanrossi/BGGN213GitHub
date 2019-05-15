@@ -1,0 +1,58 @@
+---
+title: "Class13"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+Mex <- read.csv("373531-SampleGenotypes-Homo_sapiens_Variation_Sample_rs8067378.csv")
+table(Mex$Genotype..forward.strand.)
+```
+
+```{r}
+# proportion
+round((table(Mex$Genotype..forward.strand.)/nrow(Mex)) * 100, 2)
+```
+
+```{r}
+cl13 <- read.csv(url("https://bioboot.github.io/bggn213_W19/class-material/rs8067378_ENSG00000172057.6.txt"), sep = " ")
+summary(cl13)
+```
+
+```{r}
+# Box plot for A/A genotype
+# table(cl13$geno)
+cl13$geno == "A/A"
+AA <- cl13[cl13$geno == "A/A", ]
+summary(AA)
+```
+
+```{r}
+# Box plot for G/G genotype
+# table(cl13$geno)
+cl13$geno == "G/G"
+GG <- cl13[cl13$geno == "G/G", ]
+summary(GG)
+```
+
+```{r}
+# Box plot for A/G genotype
+# table(cl13$geno)
+cl13$geno == "A/G"
+AG <- cl13[cl13$geno == "A/G", ]
+summary(AG)
+```
+
+```{r}
+boxplot(cl13$exp ~ cl13$geno, notch = TRUE)
+
+```
+
+```{r}
+# library(ggplot2)
+# plot2 <- ggplot2(cl13$exp ~ cl13$geno)
+```
+
