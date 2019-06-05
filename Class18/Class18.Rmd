@@ -69,21 +69,6 @@ aln
 ```
 
 ```{r}
-start.ind <- tumor.sites - 8
-end.ind <- tumor.sites + 8
-
-tumor <- NULL
-for(i in 1:length(start.ind)){
-  tumor <- seqbind(tumor, 
-                   seqs$ali[2, start.ind[i]:end.ind[i]])
-# seqs$ali[1, start.ind[1]:end.ind[1]]
-}
-tumor
-
-write.fasta(ids = ids, ali = tumor, file = "subsequences.fa")
-```
-
-```{r}
 ide <- conserv(seqs, method = "identity")
 mismatch.inds <- which(ide < 1)
 ```
@@ -93,6 +78,23 @@ gaps <- gap.inspect(seqs)
 gaps.inds <- gaps$t.inds
 tumor.sites <- mismatch.inds[!mismatch.inds %in% gaps.inds]
 ```
+
+```{r}
+start.ind <- tumor.sites - 8
+end.ind <- tumor.sites + 8
+
+tumor <- NULL
+for(i in 1:length(start.ind)){
+  tumor <- seqbind(tumor, 
+                   seqs$ali[2, start.ind[i]:end.ind[i]])
+  seqs$ali[1, start.ind[1]:end.ind[1]]
+}
+tumor
+
+# write.fasta(ids = ids, ali = tumor$ali, file = "subsequences.fa")
+```
+
+
 
 ```{r}
 ids <- paste( seqs$ali[1,tumor.sites], tumor.sites, seqs$ali[2,tumor.sites], sep = "")

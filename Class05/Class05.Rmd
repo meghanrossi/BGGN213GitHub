@@ -1,10 +1,14 @@
-#' ---
-#' title: "Class05"
-#' output: github_document
-#' ---
+---
+title: "Class05"
+output: github_document
+---
   
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 # Class 5 R graphics and plots
+```{r}
 weight <- read.table("bimm143_05_rstats/weight_chart.txt", header = TRUE)
 plot(weight)
 plot(weight, type = "b", main = "Weight by age", sub = "A cautionary tale", 
@@ -19,3 +23,6 @@ barplot(counts[,2], names.arg = counts[,1], col = c(rainfct), horiz = TRUE, las 
 genes <- read.table("bimm143_05_rstats/up_down_expression.txt", header = TRUE, sep = "\t")
 palette(c("blue", "gray", "red"))
 plot(genes$Condition1, genes$Condition2, col = genes$State, xlab = "Condition 1 Genes", xlim = c(-5, 15), ylim = c(-5, 15), ylab = "Condition 2 Genes")
+```
+
+

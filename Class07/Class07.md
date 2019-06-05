@@ -1,11 +1,9 @@
 BGGN213\_4\_24\_19
 ================
 
-We want to make a function to drop the lowest homework grade and give the student's \# average score.
-=====================================================================================================
+# We want to make a function to drop the lowest homework grade and give the student’s \# average score.
 
-First, individual students 1 and 2
-==================================
+# First, individual students 1 and 2
 
 ``` r
 # Let's make our function, called "grade"
@@ -31,16 +29,14 @@ grade(st2)
 
     ## [1] 92.83333
 
-Let's try this on a larger data-set
-===================================
+# Let’s try this on a larger data-set
 
 ``` r
 class <- read.csv("student_homework.csv", header = TRUE, row.names = 1)
 ans <- apply(class, 1, grade)
 ```
 
-Who has the highest grade in the class?
-=======================================
+# Who has the highest grade in the class?
 
 ``` r
 sort(ans, decreasing = TRUE)

@@ -9,7 +9,7 @@ x <- cbind(x=tmp, y=rev(tmp))
 plot(x)
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-1-1.png)
+![](Class08_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
 ``` r
 ## Use the kmeans() function setting k to 2 and nstart=20 
@@ -21,16 +21,16 @@ k2
     ## 
     ## Cluster means:
     ##           x         y
-    ## 1 -2.758442  3.142773
-    ## 2  3.142773 -2.758442
+    ## 1  3.407614 -3.077413
+    ## 2 -3.077413  3.407614
     ## 
     ## Clustering vector:
-    ##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2
-    ## [36] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    ##  [1] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1
+    ## [36] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
     ## 
     ## Within cluster sum of squares by cluster:
-    ## [1] 50.35778 50.35778
-    ##  (between_SS / total_SS =  91.2 %)
+    ## [1] 69.23017 69.23017
+    ##  (between_SS / total_SS =  90.1 %)
     ## 
     ## Available components:
     ## 
@@ -59,8 +59,8 @@ k2$centers
 ```
 
     ##           x         y
-    ## 1 -2.758442  3.142773
-    ## 2  3.142773 -2.758442
+    ## 1  3.407614 -3.077413
+    ## 2 -3.077413  3.407614
 
 ``` r
 # Plot X colored by kmeans cluster assignment
@@ -68,7 +68,7 @@ plot(x, col=k2$cluster)
 points(k2$centers, col= "blue", pch = 18, cex = 3)
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-3-1.png)
+![](Class08_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 ``` r
 # First we need to calculate point (dis)similarity
@@ -94,7 +94,7 @@ plot(hc)
 abline(h=6, col="red")
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-5-1.png)
+![](Class08_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ``` r
 cutree(hc, h=6)
@@ -116,8 +116,8 @@ gp3 <- cutree(hc, k=3)
 gp3
 ```
 
-    ##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 3 2 3 2
-    ## [36] 2 2 2 2 3 2 2 2 3 2 3 2 3 3 2 3 2 3 3 2 2 3 3 3 2
+    ##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 3 2
+    ## [36] 2 2 3 3 3 2 3 3 3 3 3 3 2 2 2 2 2 3 2 3 3 3 3 2 2
 
 ``` r
 table(gp3)
@@ -125,7 +125,7 @@ table(gp3)
 
     ## gp3
     ##  1  2  3 
-    ## 30 17 13
+    ## 30 15 15
 
 ``` r
 table(gp2)
@@ -142,7 +142,7 @@ table(gp2, gp3)
     ##    gp3
     ## gp2  1  2  3
     ##   1 30  0  0
-    ##   2  0 17 13
+    ##   2  0 15 15
 
 ``` r
 x <- rbind(
@@ -155,7 +155,7 @@ colnames(x) <- c("x", "y")
 plot(x)
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-9-1.png)
+![](Class08_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ``` r
 # Step 3. Generate colors for known clusters
@@ -164,7 +164,7 @@ col <- as.factor( rep(c("c1","c2","c3"), each=50) )
 plot(x, col=col)
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-9-2.png)
+![](Class08_files/figure-gfm/unnamed-chunk-9-2.png)<!-- -->
 
 ``` r
 # Use the dist(), hclust(), plot() and cutree() functions to return 2 and 3 clusters. How does this compare to your known 'col' groups?
@@ -174,7 +174,7 @@ hc <- hclust(d = dist_matrix)
 plot(hc)
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-10-1.png)
+![](Class08_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 ``` r
 val2 <- cutree(hc, k=2)
@@ -190,37 +190,37 @@ table(val2, val3)
 
     ##     val3
     ## val2  1  2  3
-    ##    1 46  0  0
-    ##    2  0 50 54
+    ##    1 70  0  0
+    ##    2  0 32 48
 
 ``` r
 plot(hc)
 abline(h=1.5, col="red")
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-14-1.png)
+![](Class08_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
 ``` r
 cutree(hc, h=1.5)
 ```
 
-    ##   [1] 1 1 1 1 2 1 1 1 1 2 1 3 1 1 2 3 3 1 2 2 1 2 1 1 1 1 1 2 2 1 1 1 1 1 1
-    ##  [36] 1 1 1 1 1 1 1 1 1 2 1 1 1 1 3 4 5 4 5 5 4 4 4 5 5 5 5 4 5 4 4 5 5 4 4
-    ##  [71] 4 5 4 4 5 4 4 4 4 5 4 4 4 4 4 5 4 4 4 4 4 4 4 5 4 4 5 5 4 4 3 3 5 3 3
-    ## [106] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 4 3
-    ## [141] 3 3 4 3 3 3 3 4 3 3
+    ##   [1] 1 1 1 1 2 3 2 1 2 1 2 1 1 1 2 1 1 2 4 1 1 2 2 1 1 1 1 1 2 1 2 1 2 1 1
+    ##  [36] 2 2 1 1 1 1 2 2 1 1 1 2 2 1 2 5 5 5 5 5 5 5 5 5 5 5 5 3 5 5 5 5 5 5 5
+    ##  [71] 5 5 5 5 5 5 5 5 5 5 3 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 3 3 3 3 3
+    ## [106] 3 2 3 3 4 3 3 3 2 2 4 2 2 3 2 2 3 3 2 3 3 3 3 2 2 3 2 2 3 2 3 3 3 3 2
+    ## [141] 4 3 3 2 4 2 3 3 3 2
 
 ``` r
 plot(x, col=val2)
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-15-1.png)
+![](Class08_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
 ``` r
 plot(x, col=val3)
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-16-1.png)
+![](Class08_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
 Moving on to Principal Component Analysis:
 
@@ -228,7 +228,7 @@ Moving on to Principal Component Analysis:
 mydata <- read.csv("https://tinyurl.com/expression-CSV", row.names = 1)
 ```
 
-There are 100 genes in this dataset Let's run PCA
+There are 100 genes in this dataset Let’s run PCA
 
 ``` r
 pca <- prcomp(t(mydata), scale=TRUE)
@@ -261,7 +261,8 @@ The first PCA plot
 plot(x = pca$x[,1], y = pca$x[,2])
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-19-1.png) Let's get our scree plot
+![](Class08_files/figure-gfm/unnamed-chunk-19-1.png)<!-- --> Let’s get
+our scree plot
 
 ``` r
 pca.var <- pca$sdev^2
@@ -269,20 +270,21 @@ pca.var.per <- round(pca.var/sum(pca.var)*100, 1)
 barplot(pca.var.per)
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-20-1.png)
+![](Class08_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 ``` r
 mycols <- c(rep("red", 5), rep("blue", 5))
 ```
 
-A nicer PCA plot
+A nicer PCA
+plot
 
 ``` r
 plot(x = pca$x[,1], y = pca$x[,2], xlab = paste("PC1 (",pca.var.per[1], "%)"), ylab = paste("PC2 (", pca.var.per[2], "%)"), col = mycols)
 text(pca$x[,1], y = pca$x[,2], colnames(mydata))
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-22-1.png)
+![](Class08_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
 ``` r
 x <- read.csv("UK_foods.csv", row.names = 1)
@@ -330,7 +332,7 @@ x
 barplotx <- barplot(as.matrix(x), beside=F, col=rainbow(nrow(x)))
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-24-1.png)
+![](Class08_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
 ``` r
 barplotx
@@ -342,7 +344,7 @@ barplotx
 pairanalysis <- pairs(x, col=rainbow(10), pch=16)
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-24-2.png)
+![](Class08_files/figure-gfm/unnamed-chunk-24-2.png)<!-- -->
 
 ``` r
 pairanalysis
@@ -368,7 +370,7 @@ plot(pca$x[,1], pca$x[,2], xlab="PC1", ylab="PC2", xlim=c(-270,500))
 text(pca$x[,1], pca$x[,2], colnames(x), col = mycols)
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-26-1.png) Scree Plot
+![](Class08_files/figure-gfm/unnamed-chunk-26-1.png)<!-- --> Scree Plot
 
 ``` r
 pca.var2 <- round((pca$sdev^2)/sum(pca$sdev^2) * 100)
@@ -381,7 +383,7 @@ pca.var2
 barplot(pca.var2, xlab = "Principal Component", ylab = "Percent Variation")
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-27-1.png)
+![](Class08_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
 
 ``` r
 ## Lets focus on PC1 as it accounts for > 90% of variance 
@@ -389,7 +391,7 @@ par(mar=c(10, 3, 0.35, 0))
 barplot(pca$rotation[,1], las=2)
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-28-1.png)
+![](Class08_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
 
 ``` r
 ## Lets focus on PC1 as it accounts for > 90% of variance 
@@ -397,4 +399,4 @@ par(mar=c(10, 3, 0.35, 0))
 barplot(pca$rotation[,2], las=2)
 ```
 
-![](Class08_files/figure-markdown_github/unnamed-chunk-29-1.png)
+![](Class08_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->

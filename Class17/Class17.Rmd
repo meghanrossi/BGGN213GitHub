@@ -19,11 +19,11 @@ library(RColorBrewer)
 ```
 
 ```{r}
-cytoscapePing()
+# cytoscapePing()
 ```
 
 ```{r}
-cytoscapeVersionInfo()
+# cytoscapeVersionInfo()
 ```
 
 ```{r}

@@ -226,7 +226,7 @@ summary(AG)
 boxplot(cl13$exp ~ cl13$geno, notch = TRUE)
 ```
 
-![](Class13_files/figure-markdown_github/unnamed-chunk-7-1.png)
+![](Class13_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ``` r
 # library(ggplot2)

@@ -52,3 +52,20 @@ rmsd(ori, res)
 
     ##  [1]  0.590 11.163 10.531  4.364 11.040  3.682  5.741  3.864  5.442 10.920
     ## [11]  4.318  6.249 11.084  8.929
+
+``` r
+pdb <- read.pdb("1hel")
+```
+
+    ##   Note: Accessing on-line PDB file
+
+``` r
+modes <- nma(pdb)
+```
+
+    ##  Building Hessian...     Done in 0.03 seconds.
+    ##  Diagonalizing Hessian...    Done in 0.279 seconds.
+
+``` r
+m7 <- mktrj (modes, mode = 7, file = "nma_7.pdb")
+```

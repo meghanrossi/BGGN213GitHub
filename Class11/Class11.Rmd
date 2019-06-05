@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Class11"
 output: github_document
 ---
 
@@ -21,7 +21,7 @@ aa321(pdb$seqres)
 ```
 
 ```{r}
-pdb$atom
+head(pdb$atom)
 ```
 
 ```{r}
