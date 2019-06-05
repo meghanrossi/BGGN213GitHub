@@ -1,0 +1,100 @@
+---
+title: "Class18"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Cancer Genomics
+
+```{r}
+# BiocManager::install(c("GenomicDataCommons", "TCGAbiolinks", "maftools"))
+library(GenomicDataCommons)
+library(TCGAbiolinks)
+library(maftools)
+```
+
+```{r}
+status()
+```
+
+```{r}
+projects <- getGDCprojects()
+head(projects)
+```
+
+```{r}
+cases_by_project <- cases() %>%
+  facet("project.project_id") %>%
+  aggregations()
+head(cases_by_project)
+```
+
+```{r}
+x <- cases_by_project$project.project_id
+```
+
+# Make a custom color vector for our plot
+```{r}
+colvec <- rep("lightblue", nrow(x))
+# Makes a vector that's light blue all the way down
+colvec[ x$key == "TCGA-PAAD"] <- "red"
+```
+
+```{r}
+# Plot with 'log' for y axis and rotate labels with 'las'
+par()  
+barplot(x[, 2], col = colvec, names.arg = x[,1], log="y", las=2)
+```
+
+```{r}
+samp <- getSampleFilesSummary("TCGA-PAAD")
+## Accessing information for project: TCGA-PAAD
+## Using 'state_comment' as value column. Use 'value.var' to override
+## Aggregation function missing: defaulting to length
+head(samp)
+```
+
+```{r}
+library(bio3d)
+seqs <- read.fasta("~/Downloads/lecture18_sequences.fa")
+seqs
+```
+
+```{r}
+aln <- seqaln(seqs)
+aln
+```
+
+```{r}
+start.ind <- tumor.sites - 8
+end.ind <- tumor.sites + 8
+
+tumor <- NULL
+for(i in 1:length(start.ind)){
+  tumor <- seqbind(tumor, 
+                   seqs$ali[2, start.ind[i]:end.ind[i]])
+# seqs$ali[1, start.ind[1]:end.ind[1]]
+}
+tumor
+
+write.fasta(ids = ids, ali = tumor, file = "subsequences.fa")
+```
+
+```{r}
+ide <- conserv(seqs, method = "identity")
+mismatch.inds <- which(ide < 1)
+```
+
+```{r}
+gaps <- gap.inspect(seqs)
+gaps.inds <- gaps$t.inds
+tumor.sites <- mismatch.inds[!mismatch.inds %in% gaps.inds]
+```
+
+```{r}
+ids <- paste( seqs$ali[1,tumor.sites], tumor.sites, seqs$ali[2,tumor.sites], sep = "")
+```
+

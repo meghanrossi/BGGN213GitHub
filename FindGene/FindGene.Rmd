@@ -1,0 +1,73 @@
+---
+title: "FindGene"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(bio3d)
+```
+
+```{r}
+alg <- read.fasta("first.fasta", rm.dup = FALSE)
+```
+
+```{r}
+mat1 <- seqidentity(alg, normalize = TRUE, similarity = FALSE)
+class(mat1)
+mat1
+```
+```{r}
+rowSums(mat1)
+```
+
+```{r}
+heatmap(mat1)
+```
+
+```{r}
+library(bio3d)
+library(graphics)
+```
+
+```{r}
+hum <- NP_001120716.1
+```
+
+```{r}
+###################################
+##                                #
+## Search for similar structures  #
+##                                #
+###################################
+
+# Use sequence
+# NP_001120716.1
+
+# pause()
+
+# Blast the RCSB PDB to find similar sequences 
+blast1 <- blast.pdb("NP_001120716.1")
+head(blast1$hit.tbl)
+
+# Plot results
+top.hits <- plot(blast1)
+head(top.hits$hits)
+```
+
+```{r}
+plot.blast(blast1)
+```
+
+```{r}
+pdb.annotate("6DJB")
+```
+
+```{r}
+
+```
+
+

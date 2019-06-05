@@ -1,0 +1,107 @@
+---
+title: "Class15"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(DESeq2)
+```
+
+```{r}
+metaFile <- "GSE37704_metadata.csv"
+countFile <- "GSE37704_featurecounts.csv"
+```
+
+```{r}
+colData = read.csv(metaFile, row.names=1)
+head(colData)
+```
+
+```{r}
+countData = read.csv(countFile, row.names=1)
+head(countData)
+```
+
+
+```{r}
+countData2 <- as.matrix(countData[,2:ncol(countData)])
+head(countData2)
+```
+
+```{r}
+countData2 = countData2[(rowSums(countData2)>0), ]
+head(countData2)
+```
+
+```{r}
+dds = DESeqDataSetFromMatrix(countData=countData2,
+                             colData=colData,
+                             design=~condition)
+dds = DESeq(dds)
+```
+
+```{r}
+dds
+```
+
+```{r}
+res = results(dds)
+```
+
+```{r}
+summary(res)
+```
+
+```{r}
+# plot( res$log2FoldChange, -log(res$padj) )
+# Make a color vector for all genes
+mycols <- rep("gray", nrow(res) )
+
+# Color red the genes with absolute fold change above 2
+mycols[ abs(res$log2FoldChange) > 2 ] <- "red"
+
+# Color blue those with adjusted p-value less than 0.01
+#  and absolute fold change more than 2
+inds <- ((res$padj<0.01) & (abs(res$log2FoldChange) > 2 ))
+mycols[ inds ] <- "blue"
+
+plot( res$log2FoldChange, -log(res$padj), col = mycols, xlab= "Log2(FoldChange)", ylab="-Log(P-value)" )
+```
+
+```{r}
+library("AnnotationDbi")
+library("org.Hs.eg.db")
+```
+
+
+```{r}
+columns(org.Hs.eg.db)
+
+res$symbol = mapIds(org.Hs.eg.db,
+                    keys = row.names(res), 
+                    keytype = "ENSEMBL",
+                    column = "SYMBOL",
+                    multiVals = "first")
+
+res$entrez = mapIds(org.Hs.eg.db,
+                    keys = row.names(res),
+                    keytype="ENSEMBL",
+                    column="ENTREZID",
+                    multiVals="first")
+
+res$name =   mapIds(org.Hs.eg.db,
+                    keys = row.names(res),
+                    keytype = "ENSEMBL",
+                    column = "GENENAME",
+                    multiVals = "first")
+
+head(res, 10)
+```
+
+
+
+
